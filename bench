@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+cd "$1"
+nix-shell --command "cd tests/bench && temci exec --config speedcenter.yaml && temci report run_output.yaml --reporter velcom"
