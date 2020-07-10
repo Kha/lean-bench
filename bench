@@ -1,6 +1,6 @@
 #! /bin/bash -l
 
 cd "$1"
-time nix-shell --run 'mkdir build; cd build; cmake .. && make -j8'
-time nix-shell --run 'export PATH=$PWD/build/stage0.5/bin:$PATH && cd tests/bench && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml'
+time nix-shell --run 'mkdir build; cd build; cmake .. && make -j8' 1>&2
+time nix-shell --run 'export PATH=$PWD/build/stage0.5/bin:$PATH && cd tests/bench && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml' 1>&2
 nix-shell --run "cd tests/bench && temci report run_output.yaml --reporter velcom"
