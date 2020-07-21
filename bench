@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cd "$1"
-first=086e9e062a842f37c7b74a06c491e447c9cc94f0
+first=c972086f4af2c98d8b815441cfb305f608f3cee9
 if git merge-base --is-ancestor @ $first; then
     git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml
 fi
