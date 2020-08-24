@@ -2,11 +2,11 @@
 set -euo pipefail
 
 cd "$1"
-first=9724f02b0e32cffc3888745c2cc2c1a23bf766a3
+first=defc7f766e9cd1e9fe5dc719f36a091fa0453ec9
 if git merge-base --is-ancestor @ $first; then
-    git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml
+    git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml stage0/src/stdlib.make.in
 fi
 
-time nix-shell --run 'mkdir build; cd build; cmake .. && make -j8' > log # 1>&2
-time sudo temci-shell nix-shell --run 'export PATH=$PWD/build/stage0.5/bin:$PATH && cd tests/bench && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml || true' >> log # 1>&2
+time nix-shell --run 'mkdir -p build/release; cd build/release; cmake ../.. && make -j8' > log # 1>&2
+time sudo temci-shell nix-shell --run 'export PATH=$PWD/build/release/stage0.5/bin:$PATH && cd tests/bench && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml || true' >> log # 1>&2
 nix-shell --run "cd tests/bench && temci report run_output.yaml --reporter codespeed2"
