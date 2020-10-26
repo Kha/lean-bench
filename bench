@@ -2,9 +2,9 @@
 set -euo pipefail
 
 cd "$1"
-first=5b4247a9c76d6e1bff97fcf32b15808985c8086d
+first=b856553b4fad16a6b674f5da1f70e646d647a7d6
 if git merge-base --is-ancestor @ $first; then
-    git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml stage0/src/stdlib.make.in
+    git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml tests/bench/parser.lean stage0/src/stdlib.make.in
 fi
 
 time nix-shell --run 'mkdir -p build/release; cd build/release; cmake ../.. && make -j8' > log # 1>&2
