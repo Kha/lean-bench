@@ -5,6 +5,7 @@ cd "$1"
 first=b856553b4fad16a6b674f5da1f70e646d647a7d6
 if git merge-base --is-ancestor @ $first; then
     git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml tests/bench/parser.lean stage0/src/stdlib.make.in
+    echo "#lang lean4" >> tests/bench/parser.lean
 fi
 
 time nix-shell --run 'mkdir -p build/release; cd build/release; cmake ../.. && make -j8' > log # 1>&2
