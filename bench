@@ -8,6 +8,6 @@ if git merge-base --is-ancestor @ $first; then
 fi
 
 time nix-shell --run 'nix-collect-garbage; mkdir -p build/release; cd build/release; cmake ../.. && make -j8' > log # 1>&2
-time sudo temci-shell nix --experimental-features "nix-command flakes" shell tests/bench#temci -c bash -c 'export PATH=$PWD/build/release/stage1/bin:$PATH && cd tests/bench && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml' >> log # 1>&2
 cd tests/bench
+time sudo temci-shell nix --experimental-features "nix-command flakes" shell .#temci -c bash -c 'export PATH=$PWD/../../build/release/stage1/bin:$PATH && temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml' >> log # 1>&2
 nix --experimental-features "nix-command flakes" shell .#temci -c temci report run_output.yaml --reporter codespeed2
