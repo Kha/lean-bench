@@ -2,9 +2,9 @@
 set -euo pipefail
 
 cd "$1"
-first=d3f007b3cdcefeb8dc1efbda0b675094a9a8be97
+first=5bc6496
 if git merge-base --is-ancestor @ $first; then
-    git checkout $first -- shell.nix tests/bench/speedcenter.exec.velcom.yaml
+    git checkout $first -- src/cmake/Modules/FindLibUV.cmake
 fi
 
 timeout -s KILL 1h time bash -c 'mkdir -p build/release; cd build/release; cmake ../.. && make -j$(nproc)' 1>&2
