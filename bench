@@ -7,8 +7,8 @@ if ! git merge-base --is-ancestor $first @; then
     git checkout $first -- tests/bench/speedcenter.exec.velcom.yaml
 fi
 
-timeout -s KILL 1h time nix develop . -c 'mkdir -p build/release; cd build/release; cmake ../.. && make -j$(nproc)' 1>&2
+timeout -s KILL 1h time bash -c 'mkdir -p build/release; cd build/release; cmake ../.. && make -j$(nproc)' 1>&2
 export PATH=$PWD/build/release/stage1/bin:$PATH 
 cd tests/bench
-timeout -s KILL 1h time nix develop . -c 'temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml' 1>&2
+timeout -s KILL 1h time temci exec --config speedcenter.yaml --in speedcenter.exec.velcom.yaml 1>&2
 temci report run_output.yaml --reporter codespeed2
