@@ -2,9 +2,9 @@
 set -euo pipefail
 
 cd "$1"
-first=7240d910d3e57e880425c168281c8f7d95af16e1
+first=c8cdb57
 if ! git merge-base --is-ancestor $first @; then
-    git checkout $first -- tests/bench/speedcenter.exec.velcom.yaml
+    git checkout $first -- script/benchReelabRss.lean
 fi
 
 timeout -s KILL 1h time bash -c 'mkdir -p build/release; cd build/release; cmake ../.. && make -j$(nproc)' 1>&2
